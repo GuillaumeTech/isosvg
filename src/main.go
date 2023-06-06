@@ -6,7 +6,6 @@ import (
 	"log"
 	"os"
 	"strings"
-	"unicode"
 )
 
 func main() {
@@ -41,8 +40,9 @@ func main() {
 }
 
 func processLine(line string) string {
-
-	const svgLine = `<line x1="50" x2="50" y1="110" y2="150" stroke="black" stroke-width="5"/>`
+	values := strings.Split(line, ",")
+	x1, y1, x2, y2 := values[0], values[1], values[2], values[3]
+	svgLine := fmt.Sprintf("<line x1=\"%s\" y1=\"%s\" x2=\"%s\" y2=\"%s\" stroke=\"black\" stroke-width=\"5\"/>", x1, y1, x2, y2)
 
 	return svgLine
 }
