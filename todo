@@ -1,6 +1,7 @@
 [x] write svg
-[] programatic lines
+[x] 3D lines
+[] fix matric
+[] lines, rect some primitives
 [] svg size
-[] 3D lines
 [] config "camera"
-[] functions 
+[] custom shapes "functions" 
