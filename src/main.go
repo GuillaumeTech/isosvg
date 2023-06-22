@@ -12,8 +12,11 @@ import (
 	"gonum.org/v1/gonum/mat"
 )
 
-const rotY float64 = 45.0
-const rotZ float64 = 45.0
+const rotY float64 = 135
+const rotZ float64 = 135
+const HEIGHT = 400
+const WIDTH = 400
+
 
 func main() {
 	file, err := os.Open("test.3dsvg")
@@ -31,7 +34,9 @@ func main() {
 		lines = append(lines, scanner.Text())
 	}
 
-	svgLines = append(svgLines, `<svg version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg">`)
+	svgHead := fmt.Sprintf(`<svg version="1.1" width="%d" height="%d" xmlns="http://www.w3.org/2000/svg">`, WIDTH, HEIGHT)
+	
+	svgLines = append(svgLines, svgHead)
 
 	rotMatrix := getRotMatrix(rotY, rotZ)
 	for _, line := range lines {
@@ -62,7 +67,7 @@ func processLine(line string, rotMatrix mat.Dense) string {
 	_, y1Prime, z1Prime := projectOnPlane(x1, y1, z1, rotMatrix)
 	_, y2Prime, z2Prime := projectOnPlane(x2, y2, z2, rotMatrix)
 
-	svgLine := fmt.Sprintf("<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" stroke=\"black\" stroke-width=\"5\"/>", y1Prime+100, z1Prime+100, y2Prime+100, z2Prime+100)
+	svgLine := fmt.Sprintf("<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" stroke=\"black\" stroke-width=\"5\"/>", y1Prime + (WIDTH/2), z1Prime+(HEIGHT/2), y2Prime +(WIDTH/2), z2Prime+(HEIGHT/2))
 
 	return svgLine
 }

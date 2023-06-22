@@ -3,12 +3,12 @@
 [x] fix matrix
 [x] config "camera"
     [x] custom rots
-    [] perpective (might be quite tricky
-[] zeroing
+    [] perpective
+[x] zeroing
 [] lines, rect some primitives
 [] zdepth 
     [] vary sizze fx distance
     [] draw farthest first
-[] svg size
+[x] svg size
 [] custom shapes "functions" 
 [] .obj translate 
