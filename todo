@@ -6,6 +6,9 @@
     [] perpective
 [x] zeroing
 [] lines, rect some primitives
+    [x] lines
+    [x] rect
+    [] lang so can define line and rect in the same file
 [] zdepth 
     [] vary sizze fx distance
     [] draw farthest first

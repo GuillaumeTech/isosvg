@@ -40,7 +40,7 @@ func main() {
 
 	rotMatrix := getRotMatrix(rotY, rotZ)
 	for _, line := range lines {
-		processed := processLine(line, rotMatrix)
+		processed := processRect(line, rotMatrix)
 		svgLines = append(svgLines, processed)
 	}
 	svgLines = append(svgLines, "</svg>")
@@ -68,6 +68,26 @@ func processLine(line string, rotMatrix mat.Dense) string {
 	_, y2Prime, z2Prime := projectOnPlane(x2, y2, z2, rotMatrix)
 
 	svgLine := fmt.Sprintf("<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" stroke=\"black\" stroke-width=\"5\"/>", y1Prime + (WIDTH/2), z1Prime+(HEIGHT/2), y2Prime +(WIDTH/2), z2Prime+(HEIGHT/2))
+
+	return svgLine
+}
+
+
+func processRect(rect string, rotMatrix mat.Dense) string {
+	values := strings.Split(rect, ",")
+	x1, y1, z1, x2, y2, z2, x3, y3, z3 := toFloat(values[0]), toFloat(values[1]), toFloat(values[2]), toFloat(values[3]), toFloat(values[4]), toFloat(values[5]),  toFloat(values[6]), toFloat(values[7]), toFloat(values[8])
+
+	// we consider the imagninary plane (our svg) has a base with  y' and z' axes parallel to it. so by doing a rotation it's as if we're projecting on this plane
+	// thus we drop X bc it should be on on the normal and we don't represent this axis as it's depth (doesn't matter in isometric 3d)
+	_, y1Prime, z1Prime := projectOnPlane(x1, y1, z1, rotMatrix)
+	_, y2Prime, z2Prime := projectOnPlane(x2, y2, z2, rotMatrix)
+	_, y3Prime, z3Prime := projectOnPlane(x3, y3, z3, rotMatrix)
+	y4Prime := (y2Prime - y1Prime) + y3Prime
+	z4Prime := (z2Prime - z1Prime) + z3Prime
+
+
+	// we go 1 2 4 3 because we ploygon draw like a pen so we stay on the outside and have a rectangle	
+	svgLine := fmt.Sprintf("<polygon points=\"%f,%f %f,%f %f,%f %f,%f\" />", y1Prime + (WIDTH/2), z1Prime+(HEIGHT/2), y2Prime +(WIDTH/2), z2Prime+(HEIGHT/2),  y4Prime +(WIDTH/2), z4Prime+(HEIGHT/2), y3Prime +(WIDTH/2), z3Prime+(HEIGHT/2))
 
 	return svgLine
 }
