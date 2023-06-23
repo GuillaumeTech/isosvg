@@ -39,8 +39,16 @@ func main() {
 	svgLines = append(svgLines, svgHead)
 
 	rotMatrix := getRotMatrix(rotY, rotZ)
-	for _, line := range lines {
-		processed := processRect(line, rotMatrix)
+	for _, fileline := range lines {
+		values := strings.Split(fileline, ":")
+		processed := ""
+		if (values[0] == "rect") {
+			processed = processRect(values[1], rotMatrix)
+		} else{
+			processed = processLine(values[1], rotMatrix)
+		}
+
+
 		svgLines = append(svgLines, processed)
 	}
 	svgLines = append(svgLines, "</svg>")
@@ -67,7 +75,7 @@ func processLine(line string, rotMatrix mat.Dense) string {
 	_, y1Prime, z1Prime := projectOnPlane(x1, y1, z1, rotMatrix)
 	_, y2Prime, z2Prime := projectOnPlane(x2, y2, z2, rotMatrix)
 
-	svgLine := fmt.Sprintf("<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" stroke=\"black\" stroke-width=\"5\"/>", y1Prime + (WIDTH/2), z1Prime+(HEIGHT/2), y2Prime +(WIDTH/2), z2Prime+(HEIGHT/2))
+	svgLine := fmt.Sprintf("<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" stroke=\"green\"/>", y1Prime + (WIDTH/2), z1Prime+(HEIGHT/2), y2Prime +(WIDTH/2), z2Prime+(HEIGHT/2))
 
 	return svgLine
 }
