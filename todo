@@ -3,15 +3,17 @@
 [x] fix matrix
 [x] config "camera"
     [x] custom rots
-    [] perpective
+    [] perpective ?
 [x] zeroing
 [] lines, rect some primitives
     [x] lines
     [x] rect
     [] lang so can define line and rect in the same file
+[] styling
+    [] custom colors
 [] zdepth 
-    [] vary sizze fx distance
     [] draw farthest first
+    [] vary sizze fx distance ?
 [x] svg size
 [] custom shapes "functions" 
 [] .obj translate 
