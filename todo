@@ -17,3 +17,7 @@
 [x] svg size
 [] custom shapes "functions" 
 [] .obj translate 
+[-] wasm
+    [x] seperate func
+    [] wrapperfunc for wasm
+    [] compile

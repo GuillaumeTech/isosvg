@@ -28,12 +28,25 @@ func main() {
 	scanner := bufio.NewScanner(file)
 
 	var lines []string
-	var svgLines []string
+	
 
 	for scanner.Scan() {
 		lines = append(lines, scanner.Text())
 	}
+	
+	svgLines := getSvgData(lines)
+	write(svgLines)
 
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
+
+}
+
+
+func getSvgData(lines []string) []string {
+
+	var svgLines []string
 	svgHead := fmt.Sprintf(`<svg version="1.1" width="%d" height="%d" xmlns="http://www.w3.org/2000/svg">`, WIDTH, HEIGHT)
 	
 	svgLines = append(svgLines, svgHead)
@@ -52,12 +65,7 @@ func main() {
 		svgLines = append(svgLines, processed)
 	}
 	svgLines = append(svgLines, "</svg>")
-
-	write(svgLines)
-
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
-	}
+	return svgLines
 
 }
 
